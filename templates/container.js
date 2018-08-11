@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
+// Modules
 const mapStateToProps = (state) => state;
 const mapDispatchToProps = {};
 

@@ -1,5 +1,6 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
+const chalk = require('chalk');
 
 const {
   fatal,
@@ -15,6 +16,7 @@ const {
 const { updateNPMUI } = require('./lib/plugins/npm-update');
 const { createGVOUI } = require('./lib/plugins/gvo-create');
 const { createComponentUI } = require('./lib/plugins/component-create');
+const { addComponentsUI } = require('./lib/plugins/add-components');
 
 let gvos = [];
 
@@ -49,13 +51,13 @@ const init = () => {
         process.exit(0);
       }
       else if (action === 'update') {
-        updateNPMUI([
+        return updateNPMUI([
           'inquirer',
           'chalk'
         ]).then(init);
       }
       else if (action === 'gvo') {
-        createGVOUI(`${__dirname}/src/GVO`).then(bootstrap);
+        return createGVOUI(`${__dirname}/src/GVO`).then(addComponentsUI).then(bootstrap);
       } else if (action === 'component.gvo') {
         inquirer.prompt([
           {
@@ -64,11 +66,14 @@ const init = () => {
             message: 'Which GVO',
             choices: gvos
           }
-        ]).then(({gvo}) => createComponentUI(`${__dirname}/src/GVO/${gvo}`).then(init))
+        ]).then(({gvo}) => createComponentUI(`${__dirname}/src/GVO/${gvo}`).then(addComponentsUI).then(init))
       } else if (action === 'component.common') {
-        createComponentUI(`${__dirname}/src`).then(init);
+        return createComponentUI(`${__dirname}/src`).then(addComponentsUI).then(init);
       }
-    });
+    }).catch(err => {
+      if (err) console.log(chalk.red(err));
+      init();
+    })
 };
 
 bootstrap();
