@@ -1,5 +1,4 @@
 const inquirer = require('inquirer');
-const chalk = require('chalk');
 const fs = require('fs');
 
 const {
@@ -65,9 +64,7 @@ const init = () => {
             message: 'Which GVO',
             choices: gvos
           }
-        ]).then(({gvo}) => {
-          createComponentUI(`${__dirname}/src/GVO/${gvo}`).then(init)
-        })
+        ]).then(({gvo}) => createComponentUI(`${__dirname}/src/GVO/${gvo}`).then(init))
       } else if (action === 'component.common') {
         createComponentUI(`${__dirname}/src`).then(init);
       }
