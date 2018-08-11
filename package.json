@@ -1,0 +1,18 @@
+{
+  "name": "react-db-tools",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "inquirer": "^6.1.0"
+  },
+  "dependencies": {
+    "chalk": "^2.4.1"
+  }
+}
